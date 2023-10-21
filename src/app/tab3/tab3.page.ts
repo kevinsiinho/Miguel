@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +9,11 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(private route:Router) {}
 
+ async salir(){
+    await Preferences.remove({ key: 'token' });
+    alert("Vuelve pronto")
+    this.route.navigate(['/sesion'])
+  }
 }

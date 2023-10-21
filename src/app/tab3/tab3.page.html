@@ -18,10 +18,10 @@
       <ion-input label="Email" disabled="true" labelPlacement="fixed" value="migue@gmail.com"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input label="Password" disabled="true" labelPlacement="fixed" value="jadfjadlskf"></ion-input>
+      <ion-input label="Password" type="password" disabled="true" labelPlacement="fixed" value="jadfjadlskf"></ion-input>
     </ion-item>
     <ion-item>
-     <ion-label>Salir</ion-label> <ion-button  expand="block"  color="primary"><ion-icon name="arrow-forward-outline"></ion-icon></ion-button>
+     <ion-label>Salir</ion-label> <ion-button  expand="block" (click)="salir()" color="primary"><ion-icon name="arrow-forward-outline"></ion-icon></ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

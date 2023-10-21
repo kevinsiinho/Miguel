@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsuarioService } from '../services/usuario/usuario.service';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-sesion',
@@ -8,15 +10,44 @@ import { Router } from '@angular/router';
 })
 export class SesionPage implements OnInit {
 
-  constructor(private route:Router) { }
+  public email:string=""
+  public password:string=""
+  public token:string=""
+  constructor(
+    public usuarioService: UsuarioService,
+    private route:Router,
+    ) { }
 
   ngOnInit() {
   }
 
 
-  verificar(){
 
-    console.log("entró")
-    this.route.navigate(['/tabs/tab1'])
+verificar(){
+  if(this.email=="" || this.password==""){
+    alert("Ingresa todos los datos")
+  }else{
+    this.usuarioService.entrar(this.email,this.password).then(async(res)=>{
+      await Preferences.set({
+       key: 'token',
+       value: res.data.token,
+     });
+     if(res.data.token){
+        this.OnQuien()
+     }else{
+       alert("Usuario no encontrado, verifacar los campos")
+     }
+  })
+  }
+
+}
+
+async OnQuien(){
+  const { value } = await Preferences.get({ key: 'token' });
+  if(value)
+    this.usuarioService.Quien(value).then((res)=>{
+     this.route.navigate(["tabs/tab3"])
+    })
+
   }
 }
