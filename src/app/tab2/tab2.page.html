@@ -9,18 +9,18 @@
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row>
-      <ion-col>Nombre</ion-col>
+      <ion-col>Titulo</ion-col>
       <ion-col>Estado</ion-col>
       <ion-col>Ver</ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-grid>
-    <ion-row>
-      <ion-col>Miguel arroyave</ion-col>
-      <ion-col>pendiente</ion-col>
+    <ion-row *ngFor="let item of this.anteproyectos; let x=index">
+      <ion-col>{{item.titulo}}</ion-col>
+      <ion-col>{{item.estado}}</ion-col>
       <ion-col>
-        <ion-button id="open-modal" expand="block"  color="primary"><ion-icon name="eye-outline"></ion-icon></ion-button>
+        <ion-button id="open-modal" expand="block"  (click)="verproyecto(x)"><ion-icon name="eye-outline"></ion-icon></ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -41,85 +41,41 @@
     </ion-header>
     <ion-content class="ion-padding">
      <ion-list >
+      <ion-item>
+        <ion-input label="ID:"  disabled labelPlacement="floating" value="{{this.anteproyecto.id}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input label="IDUSER:"  disabled labelPlacement="floating" value="{{this.anteproyecto.idusuario}}"></ion-input>
+      </ion-item>
     <ion-item>
-      <ion-input label="Titulo:"  labelPlacement="floating" placeholder="Escribe aquí"></ion-input>
-      <ion-accordion-group>
-      <ion-accordion value="first">
-        <ion-item slot="header" color="light">
-          <ion-label>Correción</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">
-          <ion-textarea  labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
+      <ion-input label="Titulo:"  disabled labelPlacement="floating" value="{{this.anteproyecto.titulo}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input label="Objetivo:" labelPlacement="floating" placeholder="Escribe aquí"></ion-input>
-      <ion-accordion-group>
-        <ion-accordion value="first">
-          <ion-item slot="header" color="light">
-            <ion-label>Correción</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">
-            <ion-textarea  labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
+      <ion-input label="Descripción:"  disabled labelPlacement="floating" value="{{this.anteproyecto.descripciones}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-textarea label="Descripción:" labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-      <ion-accordion-group>
-        <ion-accordion value="first">
-          <ion-item slot="header" color="light">
-            <ion-label>Correción</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">
-            <ion-textarea  labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
+      <ion-input label="Objetivo:" disabled labelPlacement="floating" value="{{this.anteproyecto.objetivo}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-textarea label="Planteamiento:" labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-      <ion-accordion-group>
-        <ion-accordion value="first">
-          <ion-item slot="header" color="light">
-            <ion-label>Correción</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">
-            <ion-textarea  labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
+      <ion-input label="Planteamiento:"  disabled labelPlacement="floating" value="{{this.anteproyecto.plateamiento}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-textarea label="Justificacion:" labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-      <ion-accordion-group>
-        <ion-accordion value="first">
-          <ion-item slot="header" color="light">
-            <ion-label>Correción</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">
-            <ion-textarea  labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
-    </ion-item>
-    <ion-item>
-      <ion-textarea label="Hipótesis:" labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-      <ion-accordion-group>
-        <ion-accordion value="first">
-          <ion-item slot="header" color="light">
-            <ion-label>Correción</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">
-            <ion-textarea  labelPlacement="floating" placeholder="Escribe aquí"></ion-textarea>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
+      <ion-textarea label="Justificacion:" disabled labelPlacement="floating" value="{{this.anteproyecto.justificacion}}"></ion-textarea>
     </ion-item>
   </ion-list>
+  <ion-item>
+    <ion-select aria-label="opciones" [(ngModel)]="this.op" placeholder="Seleciona una opcion">
+      <ion-select-option value="titulo">Titulo</ion-select-option>
+      <ion-select-option value="desc">Descripción</ion-select-option>
+      <ion-select-option value="plan">Planteamiento</ion-select-option>
+      <ion-select-option value="objetivo">Objetivo</ion-select-option>
+      <ion-select-option value="hipo">Hipotesis</ion-select-option>
+      <ion-select-option value="justi">Justificación</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-textarea label="Comentario:" labelPlacement="floating" [(ngModel)]="this.comentario"></ion-textarea>
+  </ion-item>
     </ion-content>
   </ng-template>
 </ion-modal>

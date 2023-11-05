@@ -54,6 +54,19 @@ export class UsuarioService {
        return response
   }
 
+
+  async QuienId(id:string,token:string){
+    const options = {
+      url: this.url+'/whoAmI'+id,
+      headers: { "Content-Type": "application/json",
+                  "Authorization": 'Bearer ' + token
+               }
+    };
+
+  const response: HttpResponse = await CapacitorHttp.get(options);
+       return response
+  }
+
   async crearusuario(usuario:Usuario){
     const options = {
       url: this.url+'/signup',

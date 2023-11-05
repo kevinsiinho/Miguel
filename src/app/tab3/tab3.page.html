@@ -9,16 +9,13 @@
 <ion-content [fullscreen]="true">
   <ion-list [inset]="true">
     <ion-item>
-      <ion-input label="id" disabled="true" labelPlacement="fixed" value="11111111111"></ion-input>
+      <ion-input label="id" disabled="true" labelPlacement="fixed" value="{{this.usuario.id}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input label="Nombre" disabled="true" labelPlacement="fixed" value="Miguel arroyave"></ion-input>
+      <ion-input label="Nombre" disabled="true" labelPlacement="fixed" value="{{this.usuario.nombre}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input label="Email" disabled="true" labelPlacement="fixed" value="migue@gmail.com"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input label="Password" type="password" disabled="true" labelPlacement="fixed" value="jadfjadlskf"></ion-input>
+      <ion-input label="Email" disabled="true" labelPlacement="fixed" value="{{this.usuario.email}}"></ion-input>
     </ion-item>
     <ion-item>
      <ion-label>Salir</ion-label> <ion-button  expand="block" (click)="salir()" color="primary"><ion-icon name="arrow-forward-outline"></ion-icon></ion-button>

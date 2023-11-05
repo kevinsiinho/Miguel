@@ -17,10 +17,11 @@ import {
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
 import {inject} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {FilterExcludingWhere, repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
+  param,
   post,
   requestBody,
   SchemaObject,
@@ -116,6 +117,32 @@ export class UserController {
   ): Promise<string> {
     return currentUserProfile[securityId];
   }
+
+
+
+  @authenticate('jwt')
+  @get('/whoAmI{id}', {
+    responses: {
+      '200': {
+        description: 'Return current user',
+        content: {
+          'application/json': {
+            schema: {
+              schema: getModelSchemaRef(Usuario, {includeRelations: true}),
+            },
+          },
+        },
+      },
+    },
+  })
+  async whoAmI2(
+    @param.path.string('id') id: string,
+    @inject(SecurityBindings.USER)
+    @param.filter(User, {exclude: 'where'}) filter?: FilterExcludingWhere<User>
+  ): Promise<User> {
+    return this.userRepository.findById(id,filter);
+  }
+
 
   @post('/signup', {
     responses: {

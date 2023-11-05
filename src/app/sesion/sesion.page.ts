@@ -46,7 +46,15 @@ async OnQuien(){
   const { value } = await Preferences.get({ key: 'token' });
   if(value)
     this.usuarioService.Quien(value).then((res)=>{
-     this.route.navigate(["tabs/tab3"])
+      console.log(value,res.data)
+      this.usuarioService.QuienId(res.data,value).then((data)=>{
+        console.log(data)
+        if(data.data.tipo=="estudiante"){
+          this.route.navigate(["tabs/tab1"])
+        }else if(data.data.tipo=="admin"){
+          this.route.navigate(["tabs/tab2"])
+        }
+      })
     })
 
   }

@@ -51,6 +51,12 @@ export class Anteproyecto extends Entity {
   })
   idusuario?: string;
 
+  @property({
+    type: 'array',
+    itemType: 'object',
+  })
+  correciones?: object[];
+
   constructor(data?: Partial<Anteproyecto>) {
     super(data);
   }
