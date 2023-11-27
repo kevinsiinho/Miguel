@@ -48,11 +48,10 @@ async OnQuien(){
     this.usuarioService.Quien(value).then((res)=>{
       console.log(value,res.data)
       this.usuarioService.QuienId(res.data,value).then((data)=>{
-        console.log(data)
         if(data.data.tipo=="estudiante"){
-          this.route.navigate(["tabs/tab1"])
+          this.route.navigate(["tabs/tab1/estudiante"])
         }else if(data.data.tipo=="admin"){
-          this.route.navigate(["tabs/tab2"])
+          this.route.navigate(["tabs/tab2/admin"])
         }
       })
     })

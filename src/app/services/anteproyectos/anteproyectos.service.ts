@@ -38,6 +38,7 @@ async allanteproyectos(){
   }
 
  async Nuevoanteproyecto(anteproyecto:Anteproyectos){
+  console.log(anteproyecto)
   const { value } = await Preferences.get({ key: 'token' });
     const options = {
       url: this.url+'/anteproyectos',
@@ -47,6 +48,11 @@ async allanteproyectos(){
       data:anteproyecto
       };
     const response: HttpResponse = await CapacitorHttp.post(options);
+          if(response.status==200){
+             alert("Creado")
+          }else{
+            alert("Error")
+          }
           return response
    };
 
@@ -64,11 +70,11 @@ async Unanteproyecto(){
         this.anteproyecto.SetValores(response.data[0])
   }
 
-  async ActualizarAnteproyecto(anteproyecto:Anteproyectos){
+  async ActualizarAnteproyecto(id:String,anteproyecto:Anteproyectos){
     const { value } = await Preferences.get({ key: 'token' });
     this.anteproyectos=[]
     const options = {
-      url: this.url+'/anteproyectos/'+anteproyecto.id,
+      url: this.url+'/anteproyectos/'+id,
       headers: { "Content-Type": "application/json",
       "Authorization": 'Bearer ' + value
       },
@@ -76,7 +82,12 @@ async Unanteproyecto(){
     };
 
   const response: HttpResponse = await CapacitorHttp.put(options);
-      return response
+          if(response.status==204){
+              alert("Actualizado")
+          }else{
+            alert("Error")
+          }
+          return response
   }
 
 }

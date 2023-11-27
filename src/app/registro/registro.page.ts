@@ -27,6 +27,7 @@ export class RegistroPage implements OnInit {
     alert("Error en los datos verifca")
   }else{
     this.usuarioService.crearusuario(this.usuario)
+    this.usuario= new Usuario
   }
 }
 }

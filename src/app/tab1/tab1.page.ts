@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { Anteproyectos } from '../modelos/anteproyectos/anteproyectos';
+import { AnteproyectosService } from '../services/anteproyectos/anteproyectos.service';
+import { UsuarioService } from '../services/usuario/usuario.service';
+import { Preferences } from '@capacitor/preferences';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -12,35 +17,62 @@ export class Tab1Page {
     this.isModalOpen = isOpen;
   }
 
+  public anteproyecto= new Anteproyectos
+  public anteproyectos:Anteproyectos[]=[]
+  public comentario:string=""
+  public op:string=""
+  constructor(
+    public anteproyectoservice:AnteproyectosService,
+    public usuarioService:UsuarioService,
+    public route:Router,
+    )
+   { }
 
-  constructor() {}
-  public db=[
+ngOnInit(){
+    this.anteproyectoservice.allanteproyectos().then(async (res:Anteproyectos[])=>{
+      this.anteproyectos=res
+       this.Quien().then((iduser)=>{
+            this.anteproyectos.forEach(element => {
+              if(element.idusuario===iduser){
+                  this.anteproyecto=element
+                  console.log(element.correciones)
+              }
+            })
+          })
+        })
+}
 
-    {
-      "name":"titulo",
-      "texto":"la luna",
-      "comentarios":["hola","hola2","hola","hola2","hola","hola2","hola","hola2"],
-      "estado":"enviado"
+nuevo(){
+    this.Quien().then((iduser)=>{
+      if(iduser!=""){
+      this.anteproyecto.idusuario=iduser
+      this.anteproyecto.estado="Creado";
+      this.anteproyectoservice.Nuevoanteproyecto(this.anteproyecto)
+      }
+    })
+}
 
-    },
-    {
-      "name":"objetivo",
-      "texto":"ir a la luna",
-      "comentarios":["hola3","hola4"],
-      "estado":"pendiente"
-    },
-    {
-      "name":"descripcion",
-      "texto":"ir a la luna",
-      "comentarios":["hola5","hola6"],
-      "estado":"revisado"
-    },
-    {
-      "name":"justificacion",
-      "texto":"recoger algo",
-      "comentarios":["hola8","hola9"],
-      "estado":"pendiente"
+actualizar(){
+  console.log(this.anteproyecto)
+  let id=String(this.anteproyecto.id)
+  this.anteproyecto.estado="Enviado";
+  this.anteproyectoservice.ActualizarAnteproyecto(id,this.anteproyecto)
+}
+
+async Quien(){
+    const { value } = await Preferences.get({ key: 'token' });
+    if(value){
+      const res= await this.usuarioService.Quien(value);
+      this.usuarioService.QuienId(res.data,value).then((data)=>{
+        if(data.data.tipo=="estudiante"){
+          this.route.navigate(["tabs/tab1/estudiante"])
+        }else if(data.data.tipo=="admin"){
+          this.route.navigate(["tabs/tab2/admin"])
+        }
+      })
+      return String(res.data)
+    }else{
+      return ""
     }
-
-  ]
+  }
 }
